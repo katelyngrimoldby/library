@@ -66,8 +66,8 @@ function createCard(book) {
 
 
     removeBtn.addEventListener('click', removeBook);
+    readBtn.addEventListener('click', toggleRead);
 
-    
 }
 
 function resetDisplay() {
@@ -83,7 +83,13 @@ function displayBooks() {
 }
 
 function removeBook(e) {
-    let id = e.target.id
+    let id = e.target.id;
     library.splice(id, 1);
+    displayBooks();
+}
+
+function toggleRead(e) {
+    let id = e.target.id;
+    library[id].read = !library[id].read;
     displayBooks();
 }
