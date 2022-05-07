@@ -1,6 +1,12 @@
 let library = [];
 let newBook;
-const container = document.querySelector('.container')
+const container = document.querySelector('.container');
+const form = document.querySelector('#form');
+const submitBtn = document.querySelector('#submit');
+
+submitBtn.addEventListener('click', () => {
+    addBookToLibrary();
+})
 
 class Book {
     constructor (title, author, genre, read) {
@@ -15,6 +21,7 @@ function addBookToLibrary(){
     newBook = new Book(title, author, genre, read);
     library.push(newBook);
     form.reset();
+    displayCard();
 }
 
 function createCard(book) {
@@ -40,4 +47,12 @@ function createCard(book) {
 
 function resetDisplay() {
     container.textContent = '';
+}
+
+function displayCard() {
+    resetDisplay()
+
+    for (i = 0; i<library.length; i++) {
+        createCard(library[i]);
+    }
 }
