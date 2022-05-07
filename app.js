@@ -3,13 +3,12 @@ let newBook;
 const container = document.querySelector('.container');
 const form = document.querySelector('#form');
 const submitBtn = document.querySelector('#submit');
-const removeBtn = document.createElement('button');
 
 submitBtn.addEventListener('click', () => {
     addBookToLibrary();
 });
 
-removeBtn.addEventListener('click', removeBook)
+
 
 class Book {
     constructor (title, author, genre, read) {
@@ -32,7 +31,8 @@ function createCard(book) {
     const title = document.createElement('h2');
     const author = document.createElement('h3');
     const genre = document.createElement('span');
-    
+    const removeBtn = document.createElement('button');
+    const readBtn = document.createElement('button');
 
     card.classList.add('card');
     card.setAttribute('id', library.indexOf(book));
@@ -52,8 +52,22 @@ function createCard(book) {
     removeBtn.textContent = 'Remove';
     card.appendChild(removeBtn);
 
+    readBtn.setAttribute('type', 'button');
+    readBtn.classList.add('readBtn', 'button');
+    readBtn.setAttribute('id', library.indexOf(book));
+    if(book.read) {
+        readBtn.textContent = 'Read'
+    } else {
+        readBtn.textContent = 'Not yet read'
+    }
+    card.appendChild(readBtn);
 
     container.appendChild(card);
+
+
+    removeBtn.addEventListener('click', removeBook);
+
+    
 }
 
 function resetDisplay() {
@@ -69,6 +83,7 @@ function displayBooks() {
 }
 
 function removeBook(e) {
-    library.splice(e, 1);
+    let id = e.target.id
+    library.splice(id, 1);
     displayBooks();
 }
