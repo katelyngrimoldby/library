@@ -3,10 +3,13 @@ let newBook;
 const container = document.querySelector('.container');
 const form = document.querySelector('#form');
 const submitBtn = document.querySelector('#submit');
+const removeBtn = document.createElement('button');
 
 submitBtn.addEventListener('click', () => {
     addBookToLibrary();
-})
+});
+
+removeBtn.addEventListener('click', removeBook)
 
 class Book {
     constructor (title, author, genre, read) {
@@ -21,7 +24,7 @@ function addBookToLibrary(){
     newBook = new Book(title, author, genre, read);
     library.push(newBook);
     form.reset();
-    displayCard();
+    displayBooks();
 }
 
 function createCard(book) {
@@ -29,6 +32,7 @@ function createCard(book) {
     const title = document.createElement('h2');
     const author = document.createElement('h3');
     const genre = document.createElement('span');
+    
 
     card.classList.add('card');
     card.setAttribute('id', library.indexOf(book));
@@ -42,6 +46,13 @@ function createCard(book) {
     genre.textContent = book.genre;
     card.appendChild(genre);
 
+    removeBtn.setAttribute('type', 'button');
+    removeBtn.classList.add('remove', 'button');
+    removeBtn.setAttribute('id', library.indexOf(book));
+    removeBtn.textContent = 'Remove';
+    card.appendChild(removeBtn);
+
+
     container.appendChild(card);
 }
 
@@ -49,10 +60,15 @@ function resetDisplay() {
     container.textContent = '';
 }
 
-function displayCard() {
+function displayBooks() {
     resetDisplay()
 
     for (i = 0; i<library.length; i++) {
         createCard(library[i]);
     }
+}
+
+function removeBook(e) {
+    library.splice(e, 1);
+    displayBooks();
 }
